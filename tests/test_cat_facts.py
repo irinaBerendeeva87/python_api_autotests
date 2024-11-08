@@ -1,4 +1,4 @@
-import requests
+import allure
 
 from tests.base_test import BaseTest
 
@@ -7,9 +7,9 @@ class TestAPIFacts(BaseTest):
     def get_facts(self, params=None, **kwargs):
         return self.base_get(endpoint="facts", params=params, **kwargs)
 
-    #Successfully retrieves a list of cat facts
+    @allure.title("Successfully retrieves a list of cat facts")
     def test_get_list_facts(self):
-        response = self.get_facts("facts")
+        response = self.get_facts()
         assert response.status_code == 200, "Expected status code 200"
         data = response.json()
         assert "data" in data, "Response should contain the 'data' key"
@@ -18,26 +18,27 @@ class TestAPIFacts(BaseTest):
             assert "fact" in fact, "Each fact should contain the 'fact' key"
             assert "length" in fact, "Each fact should contain the 'length' key"
 
-    #Check limit parameter in GET /facts
+    @allure.title("Check limit parameter in GET /facts")
     def test_get_list_facts_with_limit(self):
         limit = 1
-        response = self.get_facts("facts", params={"limit": limit})
+        response = self.get_facts( params={"limit": limit})
         assert response.status_code == 200, "Expected status code 200"
         data = response.json()
         assert len(data["data"]) == limit, f"Expected {limit} facts in response"
-    #Check max_length parameter in GET /facts
+
+    @allure.title("Check max_length parameter in GET /facts")
     def test_get_list_facts_with_max_length(self):
         max_length = 50
-        response = self.get_facts("facts", params={"max_length": max_length})
+        response = self.get_facts(params={"max_length": max_length})
         assert response.status_code == 200, "Expected status code 200"
         data = response.json()
         for fact in data["data"]:
             assert len(fact["fact"]) <= max_length, f"Fact length should not exceed {max_length}"
 
-    #Check pagination with limit and page parameters
+    @allure.title("Check pagination with limit and page parameters")
     def test_get_facts_with_pagination(self):
         limit, page = 3, 2
-        response = self.get_facts("facts", params={"limit": limit, "page": page})
+        response = self.get_facts(params={"limit": limit, "page": page})
         assert response.status_code == 200, "Expected status code 200"
         data = response.json()
         assert len(data["data"]) == limit, f"Expected {limit} facts on page {page}"
