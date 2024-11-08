@@ -15,3 +15,19 @@ class TestAPIFact(BaseTest):
         assert "length" in data, "Response should contain the 'length' key"
         assert isinstance(data["fact"], str), "'fact' field should be a string"
         assert isinstance(data["length"], int), "'length' field should be an integer"
+
+    #Check max_length parameter"
+    def test_get_random_fact_with_max_length(self):
+        max_length = 50
+        response = self.get_fact(params={"max_length": max_length})
+        assert response.status_code == 200, "Expected status code 200"
+        data = response.json()
+        assert len(data["fact"]) <= max_length, f"Fact length should not exceed {max_length}"
+
+    #Check handling of invalid max_length value"
+    def test_get_random_fact_with_max_length_zero_returns_empty(self):
+        max_length = 0
+        response = self.get_fact(params={"max_length": max_length})
+        assert response.status_code == 200, "Expected status code 200"
+        data = response.json()
+        assert data == {}, f"Expected empty dictionary, got {data}"
