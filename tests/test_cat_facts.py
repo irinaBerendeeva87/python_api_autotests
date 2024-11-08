@@ -17,3 +17,27 @@ class TestAPIFacts(BaseTest):
         for fact in data["data"]:
             assert "fact" in fact, "Each fact should contain the 'fact' key"
             assert "length" in fact, "Each fact should contain the 'length' key"
+
+    #Check limit parameter in GET /facts
+    def test_get_list_facts_with_limit(self):
+        limit = 1
+        response = self.get_facts("facts", params={"limit": limit})
+        assert response.status_code == 200, "Expected status code 200"
+        data = response.json()
+        assert len(data["data"]) == limit, f"Expected {limit} facts in response"
+    #Check max_length parameter in GET /facts
+    def test_get_list_facts_with_max_length(self):
+        max_length = 50
+        response = self.get_facts("facts", params={"max_length": max_length})
+        assert response.status_code == 200, "Expected status code 200"
+        data = response.json()
+        for fact in data["data"]:
+            assert len(fact["fact"]) <= max_length, f"Fact length should not exceed {max_length}"
+
+    #Check pagination with limit and page parameters
+    def test_get_facts_with_pagination(self):
+        limit, page = 3, 2
+        response = self.get_facts("facts", params={"limit": limit, "page": page})
+        assert response.status_code == 200, "Expected status code 200"
+        data = response.json()
+        assert len(data["data"]) == limit, f"Expected {limit} facts on page {page}"
