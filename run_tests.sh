@@ -42,7 +42,7 @@ pytest --alluredir=allure-results
 
 # Generation and viewing of the Allure report
 echo "Generating allure report..."
-allure serve allure-results
+allure generate allure-results -o html-allure-results
 
 # Deactivating the virtual environment
 deactivate
