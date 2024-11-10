@@ -1,6 +1,6 @@
 import allure
 
-from tests.base_test import BaseTest
+from base_test import BaseTest
 
 class TestAPIFacts(BaseTest):
 
