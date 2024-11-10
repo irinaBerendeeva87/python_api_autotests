@@ -1,8 +1,24 @@
-# test-assignment-act
+# Test Assignment for ACT
 
-1. Run tests and generate test report. 
-If needed the script will set up virtual environment and install necessary dependencies. 
+## Generating Test Reports in HTML with html-pytest
+1. Run the tests and generate a test report. 
+The script will set up a virtual environment and install necessary dependencies if needed. 
 ```bash
 ./run_tests.sh
 ```
-2. See the tests results as html in folder `report`
+2. View the test results as an HTML file in the folder `report`
+
+## Generating Test Reports with Allure
+1. Install the Allure CLI if it is not already installed.
+```bash
+brew install allure 
+```
+2. Run the tests and generate a test report. 
+The script will set up a virtual environment and install necessary dependencies if needed.
+```bash
+./run_tests.sh
+```
+3. Generate the Allure HTML report.
+```bash
+allure generate allre-results -o allure-html
+```

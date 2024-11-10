@@ -32,7 +32,7 @@ fi
 
 # Running tests with  report generation
 echo "Running  tests and generating  report"
-pytest --html=report/report.html
+pytest --html=report.html --alluredir=allure-results
 
 # Deactivating the virtual environment
 deactivate
