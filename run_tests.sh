@@ -30,19 +30,9 @@ else
     echo "requirements.txt not found. Skipping dependency check."
 fi
 
-# Checking if pytest is installed
-if ! command -v pytest &> /dev/null; then
-    echo "pytest is not installed. Installing pytest..."
-    pip install pytest --quiet
-fi
-
-# Running tests with Allure report generation
-echo "Running allure tests..."
-pytest --alluredir=allure-results
-
-# Generation and viewing of the Allure report
-echo "Generating allure report..."
-allure generate allure-results -o html-allure-results
+# Running tests with  report generation
+echo "Running  tests and generating  report"
+pytest --html=report/report.html
 
 # Deactivating the virtual environment
 deactivate
