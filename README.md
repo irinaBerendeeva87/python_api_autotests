@@ -1,4 +1,4 @@
-# Test Assignment for ACT
+# First Api autotests in Python
 
 ## Generating Test Reports in HTML with html-pytest
 1. Run the tests and generate a test report. 
